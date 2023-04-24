@@ -5,34 +5,142 @@
   font-family: sans-serif;
 }
 
+.body {
+  width: 100%;
+  max-width: 860px;
+  height: 100vh;
+  display: flex;
+  margin: auto;
+  align-items: center;
+}
+
 main {
-	width: 100%;
-	max-width: 860px;
-	margin: auto;
+  width: 100%;
+  margin: auto;
 }
 
 .textArea {
-	width: 100%;
-	resize: none;
-	outline: 0;
-	outline-offset: 0;
-	margin: 20px 0px;
+  width: 100%;
+  resize: none;
+  outline: 0;
+  outline-offset: 0;
+  margin: 20px 0px;
 }
 
 .block_keyboard {
-	width: 100%;
-	background-color: #333b41;
-	margin: auto;
-	padding: 10px;
-	border-radius: 2px;
-	display: flex;
-	flex-wrap: wrap;
+  width: 100%;
+  background-color: #333b41;
+  margin: auto;
+  padding: 10px;
+  border-radius: 2px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.changes_lang{
-	margin-top: 10px;
-	display: flex;
-	justify-content: space-between;
-	color: #586168;
-	font-size: 13px;
+.changes_lang {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  color: #586168;
+  font-size: 13px;
+}
+
+.key {
+  width: 45px;
+  height: 45px;
+  background-color: #586168;
+  margin: 5px;
+  border-radius: 2px;
+  box-shadow: 1px 1px 4px #181c1f;
+  display: flex;
+  color: #ffffffb6;
+  position: relative;
+  cursor: pointer;
+}
+
+.key_active {
+  font-size: 20px;
+  color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+}
+
+.key_second {
+  font-size: 14px;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
+
+.key.backspace{
+	width: 115px;
+}
+
+.key.left_control,
+.key.right_control {
+	width: 90px;
+}
+
+.key.del {
+	width: 60px;
+}
+
+.key.left_shift {
+	width: 70px;
+}
+
+.key.enter,
+.key.capslock {
+	width: 107px;
+}
+
+.key.backspace {
+	width: 115px;
+}
+
+.key.right_shift {
+	width: 145px;
+}
+
+.key.space {
+	width: 300px;
+}
+
+.key.backspace{
+	width: 115px;
+}
+
+.key.left_control,
+.key.right_control {
+	width: 90px;
+}
+
+.key.del {
+	width: 60px;
+}
+
+.key.left_shift {
+	width: 70px;
+}
+
+.key.enter .key_active,
+.key.capslock .key_active,
+.key.backspace .key_active,
+.key.right_shift .key_active,
+.key.left_shift .key_active,
+.key.left_alt .key_active,
+.key.right_alt .key_active,
+.key.right_control .key_active,
+.key.left_control .key_active,
+.key.tab .key_active,
+.key.del .key_active,
+.key.left_meta .key_active,
+.key.arrow_left .key_active,
+.key.arrow_right .key_active,
+.key.arrow_up .key_active,
+.key.arrow_down .key_active,
+.key.space .key_active{
+  left: 50%;
 }
