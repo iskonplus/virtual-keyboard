@@ -4,3 +4,35 @@
   box-sizing: border-box;
   font-family: sans-serif;
 }
+
+main {
+	width: 100%;
+	max-width: 860px;
+	margin: auto;
+}
+
+.textArea {
+	width: 100%;
+	resize: none;
+	outline: 0;
+	outline-offset: 0;
+	margin: 20px 0px;
+}
+
+.block_keyboard {
+	width: 100%;
+	background-color: #333b41;
+	margin: auto;
+	padding: 10px;
+	border-radius: 2px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.changes_lang{
+	margin-top: 10px;
+	display: flex;
+	justify-content: space-between;
+	color: #586168;
+	font-size: 13px;
+}
