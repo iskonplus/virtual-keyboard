@@ -5,27 +5,27 @@ const textArea =
 const blocKeyboard = '<div class="block_keyboard"></div>';
 const blockInfo =
   '<div class="changes_lang"><p>Changing the keyboard language: Alt + Ctrl</p><p>Keyboard for Windows OC</p></div>';
-
-body.prepend(main);
-
-[textArea, blocKeyboard, blockInfo].forEach((el) => {
-  main.insertAdjacentHTML("beforeend", el);
-});
-
-const divKeyboard = document.querySelector(".block_keyboard");
-
+  
+  body.prepend(main);
+  
+  [textArea, blocKeyboard, blockInfo].forEach((el) => {
+    main.insertAdjacentHTML("beforeend", el);
+  });
+  
+  const divKeyboard = document.querySelector(".block_keyboard");
+  
 const keybEn = [
   ["`", "~"],
-  [1, "!"],
-  [2, "@"],
-  [3, "#"],
-  [4, "$"],
-  [5, "%"],
-  [6, "^"],
-  [7, "&"],
-  [8, "*"],
-  [9, "("],
-  [0, ")"],
+  ["1", "!"],
+  ["2", "@"],
+  ["3", "#"],
+  ["4", "$"],
+  ["5", "%"],
+  ["6", "^"],
+  ["7", "&"],
+  ["8", "*"],
+  ["9", "("],
+  ["0", ")"],
   ["-", "_"],
   ["=", "+"],
   ["backspace", "Backspace"],
@@ -70,9 +70,9 @@ const keybEn = [
   ["/", "?"],
   ["arrow_up", "&uarr;"],
   ["right_shift", "Shift"],
-  ["left_control", "Ctrl"],
+  ["controlLeft", "Ctrl"],
   ["left_meta", "Win"],
-  ["left_alt", "Alt"],
+  ["altLeft", "Alt"],
   ["space", "Space"],
   ["right_alt","Alt"],
   ["arrow_left", "&larr;"],
@@ -83,19 +83,19 @@ const keybEn = [
 
 const keybRu = [
   ["ё"],
-  [1, "!"],
-  [2, '"'],
-  [3, "№"],
-  [4, ";"],
-  [5, "%"],
-  [6, ":"],
-  [7, "?"],
-  [8, "*"],
-  [9, "("],
-  [0, ")"],
+  ["1", "!"],
+  ["2", '"'],
+  ["3", "№"],
+  ["4", ";"],
+  ["5", "%"],
+  ["6", ":"],
+  ["7", "?"],
+  ["8", "*"],
+  ["9", "("],
+  ["0", ")"],
   ["-", "_"],
   ["=", "+"],
-  ["backspace", "backspace"],
+  ["backspace", "Backspace"],
   ["tab", "Tab"],
   ["й"],
   ["ц"],
@@ -137,9 +137,9 @@ const keybRu = [
   [".", ","],
   ["arrow_up", "&uarr;"],
   ["right_shift", "Shift"],
-  ["left_control", "Ctrl"],
+  ["controlLeft", "Ctrl"],
   ["left_meta", "Win"],
-  ["left_alt", "Alt"],
+  ["altLeft", "Alt"],
   ["space", "Space"],
   ["right_alt","Alt"],
   ["arrow_left", "&larr;"],
@@ -148,14 +148,19 @@ const keybRu = [
   ["right_control", "Ctrl"],
 ];
 
+let oppositeKeyboard;
+
 createKeyboardKeys(keybRu);
 
 function createKeyboardKeys(keyboard) {
-  let oppositeKeyboard = keyboard == keybEn ? keybRu : keybEn;
+  oppositeKeyboard = keyboard == keybEn ? keybRu : keybEn;
+  divKeyboard.innerHTML = '';
+
   keyboard.forEach((el, ind) => {
+
     divKeyboard.insertAdjacentHTML(
       "beforeend",
-      `<div class="key ${el[0].length < 2 ? "" : el[0]}">
+      `<div class="key${el[0].length < 2 ? "" : ` ${el[0]}`}">
         <div>
          <p class="key_active">${el[0].length > 1 ? el[1] : el[0]}</p>
          ${
@@ -171,3 +176,32 @@ function createKeyboardKeys(keyboard) {
   });
 }
 
+
+// *******************Change lang**********************
+
+body.addEventListener("keydown", (event) => {
+  clickKey(event);
+
+  if (event.altKey && event.code === 'ControlLeft') {
+    createKeyboardKeys(oppositeKeyboard);
+  }
+
+});
+
+let arrKeyboard = document.getElementsByClassName("key");
+
+// TODA: i think it should work differently
+
+function clickKey(event) {
+
+  [...arrKeyboard].forEach(el => {
+    if (el.className.toLowerCase() === `key ${event.code.toLowerCase()}`) {
+      el.classList.toggle("click");
+      setTimeout(() => {
+      el.classList.toggle("click");
+        
+      }, 100);
+
+    }
+  })
+}

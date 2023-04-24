@@ -78,7 +78,7 @@ main {
 	width: 115px;
 }
 
-.key.left_control,
+.key.controlLeft,
 .key.right_control {
 	width: 90px;
 }
@@ -112,7 +112,7 @@ main {
 	width: 115px;
 }
 
-.key.left_control,
+.key.controlLeft,
 .key.right_control {
 	width: 90px;
 }
@@ -130,10 +130,10 @@ main {
 .key.backspace .key_active,
 .key.right_shift .key_active,
 .key.left_shift .key_active,
-.key.left_alt .key_active,
+.key.altLeft .key_active,
 .key.right_alt .key_active,
 .key.right_control .key_active,
-.key.left_control .key_active,
+.key.controlLeft .key_active,
 .key.tab .key_active,
 .key.del .key_active,
 .key.left_meta .key_active,
@@ -143,4 +143,8 @@ main {
 .key.arrow_down .key_active,
 .key.space .key_active{
   left: 50%;
+}
+
+.key.click{
+  background-color: #000000;
 }
