@@ -107,9 +107,9 @@ const keybRu = [
   ["ш"],
   ["щ"],
   ["з"],
-  ["х"],
-  ["ъ"],
-  ["slash"],
+  ["х"," "],
+  ["ъ"," "],
+  ["/"],
   ["del", "Del"],
   ["capslock", "Caps"],
   ["ф"],
@@ -121,8 +121,8 @@ const keybRu = [
   ["о"],
   ["л"],
   ["д"],
-  ["ж"],
-  ["э"],
+  ["ж"," "],
+  ["э"," "],
   ["enter", "Enter"],
   ["left_shift", "Shift"],
   ["я"],
@@ -132,7 +132,7 @@ const keybRu = [
   ["и"],
   ["т"],
   ["ь"],
-  ["б"],
+  ["б"," "],
   ["ю", " "],
   [".", ","],
   ["arrow_up", "&uarr;"],
@@ -148,7 +148,7 @@ const keybRu = [
   ["right_control", "Ctrl"],
 ];
 
-createKeyboardKeys(keybEn);
+createKeyboardKeys(keybRu);
 
 function createKeyboardKeys(keyboard) {
   let oppositeKeyboard = keyboard == keybEn ? keybRu : keybEn;
