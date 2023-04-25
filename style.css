@@ -146,5 +146,11 @@ main {
 }
 
 .key.click{
-  background-color: #000000;
+  box-shadow: none;
+	background-color: #4c545a;
+	color: #ffffff7e;
+}
+
+.key.click p{
+	color: #ffffff7e;
 }

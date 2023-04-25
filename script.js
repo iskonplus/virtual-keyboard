@@ -5,15 +5,17 @@ const textArea =
 const blocKeyboard = '<div class="block_keyboard"></div>';
 const blockInfo =
   '<div class="changes_lang"><p>Changing the keyboard language: Alt + Ctrl</p><p>Keyboard for Windows OC</p></div>';
-  
-  body.prepend(main);
-  
-  [textArea, blocKeyboard, blockInfo].forEach((el) => {
-    main.insertAdjacentHTML("beforeend", el);
-  });
-  
-  const divKeyboard = document.querySelector(".block_keyboard");
-  
+
+body.prepend(main);
+
+let isKeyDown = "";
+
+[textArea, blocKeyboard, blockInfo].forEach((el) => {
+  main.insertAdjacentHTML("beforeend", el);
+});
+
+const divKeyboard = document.querySelector(".block_keyboard");
+
 const keybEn = [
   ["`", "~"],
   ["1", "!"],
@@ -74,7 +76,7 @@ const keybEn = [
   ["left_meta", "Win"],
   ["altLeft", "Alt"],
   ["space", "Space"],
-  ["right_alt","Alt"],
+  ["right_alt", "Alt"],
   ["arrow_left", "&larr;"],
   ["arrow_down", "&darr;"],
   ["arrow_right", "&rarr;"],
@@ -107,8 +109,8 @@ const keybRu = [
   ["ш"],
   ["щ"],
   ["з"],
-  ["х"," "],
-  ["ъ"," "],
+  ["х", " "],
+  ["ъ", " "],
   ["/"],
   ["del", "Del"],
   ["capslock", "Caps"],
@@ -121,8 +123,8 @@ const keybRu = [
   ["о"],
   ["л"],
   ["д"],
-  ["ж"," "],
-  ["э"," "],
+  ["ж", " "],
+  ["э", " "],
   ["enter", "Enter"],
   ["left_shift", "Shift"],
   ["я"],
@@ -132,7 +134,7 @@ const keybRu = [
   ["и"],
   ["т"],
   ["ь"],
-  ["б"," "],
+  ["б", " "],
   ["ю", " "],
   [".", ","],
   ["arrow_up", "&uarr;"],
@@ -141,7 +143,7 @@ const keybRu = [
   ["left_meta", "Win"],
   ["altLeft", "Alt"],
   ["space", "Space"],
-  ["right_alt","Alt"],
+  ["right_alt", "Alt"],
   ["arrow_left", "&larr;"],
   ["arrow_down", "&darr;"],
   ["arrow_right", "&rarr;"],
@@ -150,7 +152,7 @@ const keybRu = [
 
 let oppositeKeyboard;
 
-createKeyboardKeys(keybRu);
+createKeyboardKeys(keybEn);
 
 function createKeyboardKeys(keyboard) {
   oppositeKeyboard = keyboard == keybEn ? keybRu : keybEn;
@@ -163,13 +165,12 @@ function createKeyboardKeys(keyboard) {
       `<div class="key${el[0].length < 2 ? "" : ` ${el[0]}`}">
         <div>
          <p class="key_active">${el[0].length > 1 ? el[1] : el[0]}</p>
-         ${
-           el[0].length > 1
-             ? ""
-             : el[1]
-             ? `<p class="key_second">${el[1]}</p>`
-             : `<p class="key_second">${oppositeKeyboard[ind][0]}</p>`
-         }
+         ${el[0].length > 1
+        ? ""
+        : el[1]
+          ? `<p class="key_second">${el[1]}</p>`
+          : `<p class="key_second">${oppositeKeyboard[ind][0]}</p>`
+      }
         </div>
         </div>`
     );
@@ -180,28 +181,44 @@ function createKeyboardKeys(keyboard) {
 // *******************Change lang**********************
 
 body.addEventListener("keydown", (event) => {
+
+  isKeyDown = " ";
   clickKey(event);
 
-  if (event.altKey && event.code === 'ControlLeft') {
-    createKeyboardKeys(oppositeKeyboard);
+  if (event.key === "Alt") {
+    event.preventDefault();
   }
 
+  if (event.key === "Alt" && event.code === 'ControlLeft') {
+    createKeyboardKeys(oppositeKeyboard);
+  }
 });
+
 
 let arrKeyboard = document.getElementsByClassName("key");
 
-// TODA: i think it should work differently
+
+body.addEventListener("keyup", (event) => {
+  isKeyDown = "";
+  clickKey(event);
+});
+
 
 function clickKey(event) {
-
   [...arrKeyboard].forEach(el => {
-    if (el.className.toLowerCase() === `key ${event.code.toLowerCase()}`) {
-      el.classList.toggle("click");
-      setTimeout(() => {
-      el.classList.toggle("click");
-        
-      }, 100);
+    let keyValue = el.classList[1] && el.classList[1] !== "click" ? el.classList[1].toLowerCase() : el.children[0].children[0].innerText.toLowerCase();
+    let eventKey = event.key.toLowerCase();
+    let eventCode = event.code.toLowerCase();
 
+    if (keyValue === eventCode || keyValue === eventKey) {
+      isKeyDown ?
+        el.classList.add("click") :
+        el.classList.remove("click");
     }
-  })
+  });
+
 }
+
+
+
+
