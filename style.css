@@ -154,3 +154,7 @@ main {
 .key.click p{
 	color: #ffffff7e;
 }
+
+.key.uppercase{
+  text-transform: uppercase; 
+}

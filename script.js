@@ -10,7 +10,6 @@ body.prepend(main);
 
 let isKeyDown = "";
 
-
 [textArea, blocKeyboard, blockInfo].forEach((el) => {
   main.insertAdjacentHTML("beforeend", el);
 });
@@ -157,58 +156,67 @@ createKeyboardKeys(keybEn);
 
 function createKeyboardKeys(keyboard) {
   oppositeKeyboard = keyboard == keybEn ? keybRu : keybEn;
-  divKeyboard.innerHTML = '';
+  divKeyboard.innerHTML = "";
 
   keyboard.forEach((el, ind) => {
-
     divKeyboard.insertAdjacentHTML(
       "beforeend",
       `<div class="key${el[0].length < 2 ? "" : ` ${el[0]}`}">
         <div>
          <p class="key_active">${el[0].length > 1 ? el[1] : el[0]}</p>
-         ${el[0].length > 1
-        ? ""
-        : el[1]
-          ? `<p class="key_second">${el[1]}</p>`
-          : `<p class="key_second">${oppositeKeyboard[ind][0]}</p>`
-      }
+         ${
+           el[0].length > 1
+             ? ""
+             : el[1]
+             ? `<p class="key_second">${el[1]}</p>`
+             : `<p class="key_second">${oppositeKeyboard[ind][0]}</p>`
+         }
         </div>
         </div>`
     );
   });
 }
 
-
 // *******************Change lang**********************
 
 body.addEventListener("keydown", (event) => {
-
-  isKeyDown = " ";
-  clickKey(event);
+  if (event.key !== "CapsLock") {
+    isKeyDown = " ";
+    clickKey(event);
+  } else {
+    checkCaps(document.querySelector(".key.capslock"));
+  }
 
   if (event.key === "Alt" || event.key === "Tab") {
     event.preventDefault();
   }
 
-  if (event.key === "Alt" && event.code === 'ControlLeft') {
+  if (event.key === "Alt" && event.code === "ControlLeft") {
     createKeyboardKeys(oppositeKeyboard);
   }
-
 });
-
 
 let arrKeyboard = document.getElementsByClassName("key");
-
+let isCapsOn = false;
 
 body.addEventListener("keyup", (event) => {
-  isKeyDown = "";
-  clickKey(event);
+  if (event.key !== "CapsLock") {
+    isKeyDown = "";
+    clickKey(event);
+  }
 });
 
-
 function clickKey(event) {
-  [...arrKeyboard].forEach(el => {
-    let keyValue = el.classList[1] && el.classList[1] !== "click" ? el.classList[1].toLowerCase() : el.children[0].children[0].innerText.toLowerCase();
+  [...arrKeyboard].forEach((el) => {
+    console.log(el.classList[1]);
+
+    let keyValue =
+      el.classList[1] &&
+      el.classList[1] !== "click" &&
+      el.classList[1] !== "uppercase"
+        ? el.classList[1].toLowerCase()
+        : el.children[0].children[0].innerText.toLowerCase();
+
     let eventKey = event.key.toLowerCase();
     let eventCode = event.code.toLowerCase();
 
@@ -216,44 +224,63 @@ function clickKey(event) {
       togglClassClick(el);
     }
   });
-
 }
-
 
 function togglClassClick(el) {
-  isKeyDown ?
-    el.classList.add("click") :
-    el.classList.remove("click");
+  isKeyDown ? el.classList.add("click") : el.classList.remove("click");
 }
-
 
 // *******************Click virtual keyboard**********************
 
 let textAreaDom = document.querySelector(".textArea");
 
-[...arrKeyboard].forEach(el => el.addEventListener("click", () => {
+[...arrKeyboard].forEach((el) =>
+  el.addEventListener("click", () => {
+    let key = el.children[0].children[0].innerText;
 
-  console.log(el.children[0].children[0].innerText);
-  let key = el.children[0].children[0].innerText;
+    if (key === "Caps") {
+      checkCaps(el);
+    } else {
+      isKeyDown = " ";
+      togglClassClick(el);
 
-  isKeyDown = " ";
-  togglClassClick(el);
+      setTimeout(() => {
+        togglClassClick(el);
+      }, 100);
+      isKeyDown = "";
+    }
 
-  setTimeout(() => {
+    characterInput(key);
+  })
+);
+
+function checkCaps(el) {
+  if (!isCapsOn) {
+    isCapsOn = true;
+    isKeyDown = " ";
     togglClassClick(el);
-  }, 100);
-  isKeyDown = "";
-
-  characterInput(key);
-
-}));
-
-function characterInput(key) {
-
-  key === "Space" && (key = " ");
-  key === "Backspace" ?
-    (textAreaDom.value = textAreaDom.value.slice(0, -1)) :
-    textAreaDom.value += key;
+    keyValueUpperCase();
+  } else if (isCapsOn) {
+    isKeyDown = "";
+    isCapsOn = false;
+    togglClassClick(el);
+    keyValueUpperCase();
+  }
 }
 
+function keyValueUpperCase() {
+  [...arrKeyboard].forEach((el) => {
+    if (el.children[0].children[0].innerText.length === 1) {
+      el.classList.toggle("uppercase");
+    }
+  });
+}
 
+function characterInput(key) {
+  key === "Caps" && (key = "");
+  key === "Space" && (key = " ");
+  key === "Enter" && (key = "\r\n");
+  key === "Backspace"
+    ? (textAreaDom.value = textAreaDom.value.slice(0, -1))
+    : (textAreaDom.value += key);
+}
