@@ -10,6 +10,7 @@ body.prepend(main);
 
 let isKeyDown = "";
 
+
 [textArea, blocKeyboard, blockInfo].forEach((el) => {
   main.insertAdjacentHTML("beforeend", el);
 });
@@ -45,7 +46,7 @@ const keybEn = [
   ["[", "{"],
   ["]", "}"],
   ["\\", "|"],
-  ["del", "Del"],
+  ["delete", "Del"],
   ["capslock", "Caps"],
   ["a"],
   ["s"],
@@ -59,7 +60,7 @@ const keybEn = [
   [";", ":"],
   ["'", '"'],
   ["enter", "Enter"],
-  ["left_shift", "Shift"],
+  ["shiftLeft", "Shift"],
   ["z"],
   ["x"],
   ["c"],
@@ -71,16 +72,16 @@ const keybEn = [
   [".", ">"],
   ["/", "?"],
   ["arrow_up", "&uarr;"],
-  ["right_shift", "Shift"],
+  ["shiftRight", "Shift"],
   ["controlLeft", "Ctrl"],
-  ["left_meta", "Win"],
+  ["metaLeft", "Win"],
   ["altLeft", "Alt"],
   ["space", "Space"],
-  ["right_alt", "Alt"],
+  ["altRight", "Alt"],
   ["arrow_left", "&larr;"],
   ["arrow_down", "&darr;"],
   ["arrow_right", "&rarr;"],
-  ["right_control", "Ctrl"],
+  ["controlRight", "Ctrl"],
 ];
 
 const keybRu = [
@@ -112,7 +113,7 @@ const keybRu = [
   ["х", " "],
   ["ъ", " "],
   ["/"],
-  ["del", "Del"],
+  ["delete", "Del"],
   ["capslock", "Caps"],
   ["ф"],
   ["ы"],
@@ -126,7 +127,7 @@ const keybRu = [
   ["ж", " "],
   ["э", " "],
   ["enter", "Enter"],
-  ["left_shift", "Shift"],
+  ["shiftLeft", "Shift"],
   ["я"],
   ["ч"],
   ["с"],
@@ -138,16 +139,16 @@ const keybRu = [
   ["ю", " "],
   [".", ","],
   ["arrow_up", "&uarr;"],
-  ["right_shift", "Shift"],
+  ["shiftRight", "Shift"],
   ["controlLeft", "Ctrl"],
-  ["left_meta", "Win"],
+  ["metaLeft", "Win"],
   ["altLeft", "Alt"],
   ["space", "Space"],
-  ["right_alt", "Alt"],
+  ["altRight", "Alt"],
   ["arrow_left", "&larr;"],
   ["arrow_down", "&darr;"],
   ["arrow_right", "&rarr;"],
-  ["right_control", "Ctrl"],
+  ["controlRight", "Ctrl"],
 ];
 
 let oppositeKeyboard;
@@ -185,13 +186,14 @@ body.addEventListener("keydown", (event) => {
   isKeyDown = " ";
   clickKey(event);
 
-  if (event.key === "Alt") {
+  if (event.key === "Alt" || event.key === "Tab") {
     event.preventDefault();
   }
 
   if (event.key === "Alt" && event.code === 'ControlLeft') {
     createKeyboardKeys(oppositeKeyboard);
   }
+
 });
 
 
@@ -211,14 +213,33 @@ function clickKey(event) {
     let eventCode = event.code.toLowerCase();
 
     if (keyValue === eventCode || keyValue === eventKey) {
-      isKeyDown ?
-        el.classList.add("click") :
-        el.classList.remove("click");
+      togglClassClick(el);
     }
   });
 
 }
 
+
+function togglClassClick(el) {
+  isKeyDown ?
+        el.classList.add("click") :
+        el.classList.remove("click");
+}
+
+
+// *******************Click virtual keyboard**********************
+
+[...arrKeyboard].forEach(el => el.addEventListener("click", () => {
+  console.log(el.children[0].children[0].innerText);
+  isKeyDown = " ";
+  togglClassClick(el);
+  
+  setTimeout(() => {
+    togglClassClick(el);
+  }, 100);
+  isKeyDown = "";
+
+}));
 
 
 

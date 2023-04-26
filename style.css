@@ -79,15 +79,15 @@ main {
 }
 
 .key.controlLeft,
-.key.right_control {
+.key.controlRight {
 	width: 90px;
 }
 
-.key.del {
+.key.delete {
 	width: 60px;
 }
 
-.key.left_shift {
+.key.shiftLeft {
 	width: 70px;
 }
 
@@ -100,7 +100,7 @@ main {
 	width: 115px;
 }
 
-.key.right_shift {
+.key.shiftRight {
 	width: 145px;
 }
 
@@ -113,30 +113,30 @@ main {
 }
 
 .key.controlLeft,
-.key.right_control {
+.key.controlRight {
 	width: 90px;
 }
 
-.key.del {
+.key.delete {
 	width: 60px;
 }
 
-.key.left_shift {
+.key.shiftLeft {
 	width: 70px;
 }
 
 .key.enter .key_active,
 .key.capslock .key_active,
 .key.backspace .key_active,
-.key.right_shift .key_active,
-.key.left_shift .key_active,
+.key.shiftRight .key_active,
+.key.shiftLeft .key_active,
 .key.altLeft .key_active,
-.key.right_alt .key_active,
-.key.right_control .key_active,
+.key.altRight .key_active,
+.key.controlRight .key_active,
 .key.controlLeft .key_active,
 .key.tab .key_active,
-.key.del .key_active,
-.key.left_meta .key_active,
+.key.delete .key_active,
+.key.metaLeft .key_active,
 .key.arrow_left .key_active,
 .key.arrow_right .key_active,
 .key.arrow_up .key_active,
