@@ -222,24 +222,38 @@ function clickKey(event) {
 
 function togglClassClick(el) {
   isKeyDown ?
-        el.classList.add("click") :
-        el.classList.remove("click");
+    el.classList.add("click") :
+    el.classList.remove("click");
 }
 
 
 // *******************Click virtual keyboard**********************
 
+let textAreaDom = document.querySelector(".textArea");
+
 [...arrKeyboard].forEach(el => el.addEventListener("click", () => {
+
   console.log(el.children[0].children[0].innerText);
+  let key = el.children[0].children[0].innerText;
+
   isKeyDown = " ";
   togglClassClick(el);
-  
+
   setTimeout(() => {
     togglClassClick(el);
   }, 100);
   isKeyDown = "";
 
+  characterInput(key);
+
 }));
 
+function characterInput(key) {
+
+  key === "Space" && (key = " ");
+  key === "Backspace" ?
+    (textAreaDom.value = textAreaDom.value.slice(0, -1)) :
+    textAreaDom.value += key;
+}
 
 
