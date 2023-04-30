@@ -277,9 +277,12 @@ function keyValueUpperCase() {
 }
 
 function characterInput(key) {
+  console.log(key)
+  key === "Shift" && (key = "");
   key === "Caps" && (key = "");
   key === "Space" && (key = " ");
   key === "Enter" && (key = "\r\n");
+  key === "Tab" && (key = '\t');
   key === "Backspace"
     ? (textAreaDom.value = textAreaDom.value.slice(0, -1))
     : (textAreaDom.value += key);
