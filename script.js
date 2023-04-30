@@ -278,6 +278,10 @@ function keyValueUpperCase() {
 
 function characterInput(key) {
   console.log(key)
+  if (key === "Del") {
+    key = textAreaDom.value.substring(1);
+    textAreaDom.value = '';
+  }
   key === "Shift" && (key = "");
   key === "Caps" && (key = "");
   key === "Space" && (key = " ");
