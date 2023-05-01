@@ -290,7 +290,7 @@ let index;
 
     !isShiftClick
       ? (key = el.children[0].children[0].innerText)
-      : (key = /^[а-яА-ЯёЁa-zA-Z]/.test(el.children[0].children[0].innerText)
+      : (key = /^[а-яА-ЯёЁa-zA-Z←↑↓→]/.test(el.children[0].children[0].innerText)
         ? el.children[0].children[0].innerText
         : el.children[0].children[1].innerText);
 
@@ -301,7 +301,16 @@ let index;
       index = ind;
       checkShift(el);
 
-    } else if (key === "Alt" && !isShiftClick) {
+    }else if (key === "Alt" && !!isAltClick ) {
+      togglClassClick(el);
+      setTimeout(() => {
+        togglClassClick(el);
+      }, 100);
+      isKeyDown = "";
+      isAltClick = false;
+      togglClassClick(arr[index]);
+
+    } else if (key === "Alt" && !isShiftClick ) {
       checkAlt(el);
       index = ind;
 
@@ -318,6 +327,12 @@ let index;
 
       if (isShiftClick ) {
         checkShift(arr[index]);
+      }
+
+      if (!!isAltClick) {
+        isKeyDown = "";
+      isAltClick = false;
+      togglClassClick(arr[index]);
       }
 
       setTimeout(() => {
@@ -339,7 +354,6 @@ function checkAlt(el) {
   } else if (isAltClick) {
     isKeyDown = "";
     isAltClick = false;  
-    // isShiftClick = false;
     togglClassClick(el);
     changeLang(oppositeKeyboard);
   }
