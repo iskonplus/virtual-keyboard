@@ -137,10 +137,10 @@ main {
 .key.tab .key_active,
 .key.delete .key_active,
 .key.metaLeft .key_active,
-.key.arrow_left .key_active,
-.key.arrow_right .key_active,
-.key.arrow_up .key_active,
-.key.arrow_down .key_active,
+.key.arrowleft .key_active,
+.key.arrowright .key_active,
+.key.arrowup .key_active,
+.key.arrowdown .key_active,
 .key.space .key_active{
   left: 50%;
 }

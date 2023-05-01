@@ -71,16 +71,16 @@ const keybEn = [
   [",", "<"],
   [".", ">"],
   ["/", "?"],
-  ["arrow_up", "&uarr;"],
+  ["arrowup", "&uarr;"],
   ["shiftRight", "Shift"],
   ["controlLeft", "Ctrl"],
   ["metaLeft", "Win"],
   ["altLeft", "Alt"],
   ["space", "Space"],
   ["altRight", "Alt"],
-  ["arrow_left", "&larr;"],
-  ["arrow_down", "&darr;"],
-  ["arrow_right", "&rarr;"],
+  ["arrowleft", "&larr;"],
+  ["arrowdown", "&darr;"],
+  ["arrowright", "&rarr;"],
   ["controlRight", "Ctrl"],
 ];
 
@@ -138,16 +138,16 @@ const keybRu = [
   ["б", " "],
   ["ю", " "],
   [".", ","],
-  ["arrow_up", "&uarr;"],
+  ["arrowup", "&uarr;"],
   ["shiftRight", "Shift"],
   ["controlLeft", "Ctrl"],
   ["metaLeft", "Win"],
   ["altLeft", "Alt"],
   ["space", "Space"],
   ["altRight", "Alt"],
-  ["arrow_left", "&larr;"],
-  ["arrow_down", "&darr;"],
-  ["arrow_right", "&rarr;"],
+  ["arrowleft", "&larr;"],
+  ["arrowdown", "&darr;"],
+  ["arrowright", "&rarr;"],
   ["controlRight", "Ctrl"],
 ];
 
@@ -183,6 +183,15 @@ body.addEventListener("keydown", (event) => {
   if (event.key === "Alt" || event.key === "Tab") {
     event.preventDefault();
     event.key === "Tab" && characterInput("Tab");
+  }
+
+  if (event.key === "ArrowDown" || event.key === "ArrowUp" || event.key === "ArrowLeft" || event.key === "ArrowRight") {
+    event.preventDefault();
+    event.key === "ArrowDown" && characterInput("↓");
+    event.key === "ArrowUp" && characterInput("↑");
+    event.key === "ArrowLeft" && characterInput("←");
+    event.key === "ArrowRight" && characterInput("→");
+  
   }
 
   if (event.altKey && event.shiftKey) {
