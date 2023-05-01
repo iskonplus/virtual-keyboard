@@ -85,7 +85,7 @@ const keybEn = [
 ];
 
 const keybRu = [
-  ["ё"],
+  ["ё", " "],
   ["1", "!"],
   ["2", '"'],
   ["3", "№"],
@@ -181,25 +181,21 @@ function createKeyboardKeys(keyboard) {
 // *******************Change lang**********************
 
 body.addEventListener("keydown", (event) => {
-
   if (event.key === "Alt" || event.key === "Tab") {
     event.preventDefault();
     event.key === "Tab" && characterInput("Tab");
   }
-  
-  if (event.altKey && event.shiftKey) {
 
+  if (event.altKey && event.shiftKey) {
     changeLang(oppositeKeyboard);
     isKeyDown = " ";
     clickKey(event);
-
-  } else if (event.shiftKey) { 
+  } else if (event.shiftKey) {
     isShiftClick = true;
     isKeyDown = " ";
     clickKey(event);
-
   } else {
-    isShiftClick = false;
+    // isShiftClick = false;
     if (event.key !== "CapsLock") {
       isKeyDown = " ";
       clickKey(event);
@@ -207,24 +203,25 @@ body.addEventListener("keydown", (event) => {
       checkCaps(document.querySelector(".key.capslock"));
     }
   }
-
 });
 
 function changeLang(lang) {
   oppositeKeyboard = lang == keybEn ? keybRu : keybEn;
 
-  [...arrKeyboard].forEach((el,ind) => {
+  [...arrKeyboard].forEach((el, ind) => {
     if (el.children[0].children[0].innerText.length === 1) {
-      el.children[0].children[0].innerHTML = `${lang[ind][0].length > 1 ? lang[ind][1] : lang[ind][0]}`
+      el.children[0].children[0].innerHTML = `${
+        lang[ind][0].length > 1 ? lang[ind][1] : lang[ind][0]
+      }`;
 
       if (el.children[0].children[1]) {
-        el.children[0].children[1].innerHTML = `${lang[ind][1] ? lang[ind][1] : oppositeKeyboard[ind][0]}`
+        el.children[0].children[1].innerHTML = `${
+          lang[ind][1] ? lang[ind][1] : oppositeKeyboard[ind][0]
+        }`;
       }
     }
   });
-
 }
-
 
 let arrKeyboard = document.getElementsByClassName("key");
 let isCapsOn = false;
@@ -234,17 +231,23 @@ body.addEventListener("keyup", (event) => {
     isKeyDown = "";
     clickKey(event);
   }
+  if (event.key === "Shift") {
+    isShiftClick = false;
+  }
 });
 
 function clickKey(event) {
   [...arrKeyboard].forEach((el) => {
-
     let keyValue =
       el.classList[1] &&
       el.classList[1] !== "click" &&
       el.classList[1] !== "uppercase"
         ? el.classList[1].toLowerCase()
-        : isShiftClick ?el.children[0].children[1].innerText.toLowerCase():el.children[0].children[0].innerText.toLowerCase();
+        : isShiftClick
+        ? /^[а-яА-ЯёЁa-zA-Z]/.test(el.children[0].children[1].innerText)
+          ? el.children[0].children[0].innerText.toLowerCase()
+          : el.children[0].children[1].innerText.toLowerCase()
+        : el.children[0].children[0].innerText.toLowerCase();
 
     let eventKey = event.key.toLowerCase();
     let eventCode = event.code.toLowerCase();
@@ -263,18 +266,30 @@ function togglClassClick(el) {
 
 let textAreaDom = document.querySelector(".textArea");
 
+let indexShift;
 
-[...arrKeyboard].forEach((el) =>
+[...arrKeyboard].forEach((el, ind, arr) =>
   el.addEventListener("click", () => {
-    let key = el.children[0].children[0].innerText;
+    let key;
 
-    console.log(key)
+    !isShiftClick
+      ? (key = el.children[0].children[0].innerText)
+      : (key = /^[а-яА-ЯёЁa-zA-Z]/.test(el.children[0].children[0].innerText)
+          ? el.children[0].children[0].innerText
+          : el.children[0].children[1].innerText);
 
     if (key === "Caps") {
       checkCaps(el);
+    } else if (key === "Shift") {
+      indexShift = ind;
+      checkShift(el);
     } else {
       isKeyDown = " ";
       togglClassClick(el);
+
+      if (isShiftClick) {
+        checkShift(arr[indexShift]);
+      }
 
       setTimeout(() => {
         togglClassClick(el);
@@ -285,6 +300,20 @@ let textAreaDom = document.querySelector(".textArea");
     characterInput(key);
   })
 );
+
+function checkShift(el) {
+  if (!isShiftClick) {
+    isShiftClick = true;
+    isKeyDown = " ";
+    togglClassClick(el);
+    keyValueUpperCase();
+  } else if (isShiftClick) {
+    isKeyDown = "";
+    isShiftClick = false;
+    togglClassClick(el);
+    keyValueUpperCase();
+  }
+}
 
 function checkCaps(el) {
   if (!isCapsOn) {
@@ -311,7 +340,7 @@ function keyValueUpperCase() {
 function characterInput(key) {
   if (key === "Del") {
     key = textAreaDom.value.substring(1);
-    textAreaDom.value = '';
+    textAreaDom.value = "";
   }
   key === "Alt" && (key = "");
   key === "Ctrl" && (key = "");
@@ -319,12 +348,8 @@ function characterInput(key) {
   key === "Caps" && (key = "");
   key === "Space" && (key = " ");
   key === "Enter" && (key = "\r\n");
-  key === "Tab" && (key = '\t');
+  key === "Tab" && (key = "\t");
   key === "Backspace"
     ? (textAreaDom.value = textAreaDom.value.slice(0, -1))
     : (textAreaDom.value += key);
 }
-
-
-
-
