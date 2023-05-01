@@ -4,7 +4,7 @@ const textArea =
   '<div class="block_textArea"><textArea class="textArea", rows="10",> </textArea></div>';
 const blocKeyboard = '<div class="block_keyboard"></div>';
 const blockInfo =
-  '<div class="changes_lang"><p>Changing the keyboard language: Alt + Shift</p><p>Keyboard for Windows OC</p></div>';
+  '<div class="changes_lang"><p>Change keyboard language: Alt+Shift</p><p>Keyboard for Windows OC</p></div>';
 
 body.prepend(main);
 
@@ -112,7 +112,7 @@ const keybRu = [
   ["з"],
   ["х", " "],
   ["ъ", " "],
-  ["/"],
+  ["\\", "/"],
   ["delete", "Del"],
   ["capslock", "Caps"],
   ["ф"],
@@ -158,13 +158,12 @@ if (!localStorage.getItem("lang")) {
   localStorage.setItem("lang", "keybEn")
   createKeyboardKeys(keybEn);
 } else {
-  createKeyboardKeys(localStorage.getItem("lang")==="keybEn" ? keybEn : keybRu);
+  createKeyboardKeys(localStorage.getItem("lang") === "keybEn" ? keybEn : keybRu);
 }
 
 
 function createKeyboardKeys(keyboard) {
   oppositeKeyboard = keyboard == keybEn ? keybRu : keybEn;
- 
   divKeyboard.innerHTML = "";
 
   keyboard.forEach((el, ind) => {
@@ -173,13 +172,12 @@ function createKeyboardKeys(keyboard) {
       `<div class="key${el[0].length < 2 ? "" : ` ${el[0]}`}">
         <div>
          <p class="key_active">${el[0].length > 1 ? el[1] : el[0]}</p>
-         ${
-           el[0].length > 1
-             ? ""
-             : el[1]
-             ? `<p class="key_second">${el[1]}</p>`
-             : `<p class="key_second">${oppositeKeyboard[ind][0]}</p>`
-         }
+         ${el[0].length > 1
+        ? ""
+        : el[1]
+          ? `<p class="key_second">${el[1]}</p>`
+          : `<p class="key_second">${oppositeKeyboard[ind][0]}</p>`
+      }
         </div>
         </div>`
     );
@@ -200,7 +198,7 @@ body.addEventListener("keydown", (event) => {
     event.key === "ArrowUp" && characterInput("↑");
     event.key === "ArrowLeft" && characterInput("←");
     event.key === "ArrowRight" && characterInput("→");
-  
+
   }
 
   if (event.altKey && event.shiftKey) {
@@ -227,19 +225,17 @@ function changeLang(lang) {
 
   [...arrKeyboard].forEach((el, ind) => {
     if (el.children[0].children[0].innerText.length === 1) {
-      el.children[0].children[0].innerHTML = `${
-        lang[ind][0].length > 1 ? lang[ind][1] : lang[ind][0]
-      }`;
+      el.children[0].children[0].innerHTML = `${lang[ind][0].length > 1 ? lang[ind][1] : lang[ind][0]
+        }`;
 
       if (el.children[0].children[1]) {
-        el.children[0].children[1].innerHTML = `${
-          lang[ind][1] ? lang[ind][1] : oppositeKeyboard[ind][0]
-        }`;
+        el.children[0].children[1].innerHTML = `${lang[ind][1] ? lang[ind][1] : oppositeKeyboard[ind][0]
+          }`;
       }
     }
   });
 
-  localStorage.setItem("lang", `${lang=== keybEn ? "keybEn" : "keybRu"}`)
+  localStorage.setItem("lang", `${lang === keybEn ? "keybEn" : "keybRu"}`)
 }
 
 let arrKeyboard = document.getElementsByClassName("key");
@@ -260,14 +256,14 @@ function clickKey(event) {
   [...arrKeyboard].forEach((el) => {
     let keyValue =
       el.classList[1] &&
-      el.classList[1] !== "click" &&
-      el.classList[1] !== "uppercase"
+        el.classList[1] !== "click" &&
+        el.classList[1] !== "uppercase"
         ? el.classList[1].toLowerCase()
         : isShiftClick
-        ? /^[а-яА-ЯёЁa-zA-Z]/.test(el.children[0].children[1].innerText)
-          ? el.children[0].children[0].innerText.toLowerCase()
-          : el.children[0].children[1].innerText.toLowerCase()
-        : el.children[0].children[0].innerText.toLowerCase();
+          ? /^[а-яА-ЯёЁa-zA-Z]/.test(el.children[0].children[0].innerText)
+            ? el.children[0].children[0].innerText.toLowerCase()
+            : el.children[0].children[1].innerText.toLowerCase()
+          : el.children[0].children[0].innerText.toLowerCase();
 
     let eventKey = event.key.toLowerCase();
     let eventCode = event.code.toLowerCase();
@@ -294,8 +290,8 @@ let indexShift;
     !isShiftClick
       ? (key = el.children[0].children[0].innerText)
       : (key = /^[а-яА-ЯёЁa-zA-Z]/.test(el.children[0].children[0].innerText)
-          ? el.children[0].children[0].innerText
-          : el.children[0].children[1].innerText);
+        ? el.children[0].children[0].innerText
+        : el.children[0].children[1].innerText);
 
     if (key === "Caps") {
       checkCaps(el);
@@ -379,5 +375,3 @@ function characterInput(key) {
     ? (textAreaDom.value = textAreaDom.value.slice(0, -1))
     : (textAreaDom.value += key);
 }
-
-// localStorage.getItem("lang") && rusLang(1);
