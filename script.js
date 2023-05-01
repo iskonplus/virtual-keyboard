@@ -152,7 +152,6 @@ const keybRu = [
 ];
 
 let oppositeKeyboard;
-
 createKeyboardKeys(keybEn);
 
 function createKeyboardKeys(keyboard) {
@@ -195,7 +194,6 @@ body.addEventListener("keydown", (event) => {
     isKeyDown = " ";
     clickKey(event);
   } else {
-    // isShiftClick = false;
     if (event.key !== "CapsLock") {
       isKeyDown = " ";
       clickKey(event);
@@ -204,6 +202,7 @@ body.addEventListener("keydown", (event) => {
     }
   }
 });
+
 
 function changeLang(lang) {
   oppositeKeyboard = lang == keybEn ? keybRu : keybEn;
@@ -236,6 +235,7 @@ body.addEventListener("keyup", (event) => {
   }
 });
 
+
 function clickKey(event) {
   [...arrKeyboard].forEach((el) => {
     let keyValue =
@@ -265,7 +265,6 @@ function togglClassClick(el) {
 // *******************Click virtual keyboard**********************
 
 let textAreaDom = document.querySelector(".textArea");
-
 let indexShift;
 
 [...arrKeyboard].forEach((el, ind, arr) =>
@@ -280,9 +279,11 @@ let indexShift;
 
     if (key === "Caps") {
       checkCaps(el);
+
     } else if (key === "Shift") {
       indexShift = ind;
       checkShift(el);
+
     } else {
       isKeyDown = " ";
       togglClassClick(el);
@@ -295,11 +296,12 @@ let indexShift;
         togglClassClick(el);
       }, 100);
       isKeyDown = "";
-    }
 
+    }
     characterInput(key);
   })
 );
+
 
 function checkShift(el) {
   if (!isShiftClick) {
@@ -315,6 +317,7 @@ function checkShift(el) {
   }
 }
 
+
 function checkCaps(el) {
   if (!isCapsOn) {
     isCapsOn = true;
@@ -329,6 +332,7 @@ function checkCaps(el) {
   }
 }
 
+
 function keyValueUpperCase() {
   [...arrKeyboard].forEach((el) => {
     if (el.children[0].children[0].innerText.length === 1) {
@@ -336,6 +340,7 @@ function keyValueUpperCase() {
     }
   });
 }
+
 
 function characterInput(key) {
   if (key === "Del") {
