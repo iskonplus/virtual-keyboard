@@ -152,10 +152,19 @@ const keybRu = [
 ];
 
 let oppositeKeyboard;
-createKeyboardKeys(keybEn);
+
+
+if (!localStorage.getItem("lang")) {
+  localStorage.setItem("lang", "keybEn")
+  createKeyboardKeys(keybEn);
+} else {
+  createKeyboardKeys(localStorage.getItem("lang")==="keybEn" ? keybEn : keybRu);
+}
+
 
 function createKeyboardKeys(keyboard) {
   oppositeKeyboard = keyboard == keybEn ? keybRu : keybEn;
+ 
   divKeyboard.innerHTML = "";
 
   keyboard.forEach((el, ind) => {
@@ -229,6 +238,8 @@ function changeLang(lang) {
       }
     }
   });
+
+  localStorage.setItem("lang", `${lang=== keybEn ? "keybEn" : "keybRu"}`)
 }
 
 let arrKeyboard = document.getElementsByClassName("key");
@@ -356,6 +367,7 @@ function characterInput(key) {
     key = textAreaDom.value.substring(1);
     textAreaDom.value = "";
   }
+  key === "Win" && (key = "");
   key === "Alt" && (key = "");
   key === "Ctrl" && (key = "");
   key === "Shift" && (key = "");
@@ -367,3 +379,5 @@ function characterInput(key) {
     ? (textAreaDom.value = textAreaDom.value.slice(0, -1))
     : (textAreaDom.value += key);
 }
+
+// localStorage.getItem("lang") && rusLang(1);
