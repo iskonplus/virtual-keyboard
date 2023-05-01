@@ -1,0 +1,160 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+.body {
+  width: 100%;
+  max-width: 860px;
+  height: 100vh;
+  display: flex;
+  margin: auto;
+  align-items: center;
+}
+
+main {
+  width: 100%;
+  margin: auto;
+}
+
+.textArea {
+  width: 100%;
+  resize: none;
+  outline: 0;
+  outline-offset: 0;
+  margin: 20px 0px;
+}
+
+.block_keyboard {
+  width: 100%;
+  background-color: #333b41;
+  margin: auto;
+  padding: 10px;
+  border-radius: 2px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.changes_lang {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  color: #586168;
+  font-size: 13px;
+}
+
+.key {
+  width: 45px;
+  height: 45px;
+  background-color: #586168;
+  margin: 5px;
+  border-radius: 2px;
+  box-shadow: 1px 1px 4px #181c1f;
+  display: flex;
+  color: #ffffffb6;
+  position: relative;
+  cursor: pointer;
+}
+
+.key_active {
+  font-size: 20px;
+  color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+}
+
+.key_second {
+  font-size: 14px;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
+
+.key.backspace{
+	width: 115px;
+}
+
+.key.controlLeft,
+.key.controlRight {
+	width: 90px;
+}
+
+.key.delete {
+	width: 60px;
+}
+
+.key.shiftLeft {
+	width: 70px;
+}
+
+.key.enter,
+.key.capslock {
+	width: 107px;
+}
+
+.key.backspace {
+	width: 115px;
+}
+
+.key.shiftRight {
+	width: 145px;
+}
+
+.key.space {
+	width: 300px;
+}
+
+.key.backspace{
+	width: 115px;
+}
+
+.key.controlLeft,
+.key.controlRight {
+	width: 90px;
+}
+
+.key.delete {
+	width: 60px;
+}
+
+.key.shiftLeft {
+	width: 70px;
+}
+
+.key.enter .key_active,
+.key.capslock .key_active,
+.key.backspace .key_active,
+.key.shiftRight .key_active,
+.key.shiftLeft .key_active,
+.key.altLeft .key_active,
+.key.altRight .key_active,
+.key.controlRight .key_active,
+.key.controlLeft .key_active,
+.key.tab .key_active,
+.key.delete .key_active,
+.key.metaLeft .key_active,
+.key.arrowleft .key_active,
+.key.arrowright .key_active,
+.key.arrowup .key_active,
+.key.arrowdown .key_active,
+.key.space .key_active{
+  left: 50%;
+}
+
+.key.click{
+  box-shadow: none;
+	background-color: #4c545a;
+	color: #ffffff7e;
+}
+
+.key.click p{
+	color: #ffffff7e;
+}
+
+.key.uppercase{
+  text-transform: uppercase; 
+}
