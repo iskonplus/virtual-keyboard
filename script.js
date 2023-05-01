@@ -10,6 +10,7 @@ body.prepend(main);
 
 let isKeyDown = "";
 let isShiftClick = false;
+let isAltClick = false;
 
 [textArea, blocKeyboard, blockInfo].forEach((el) => {
   main.insertAdjacentHTML("beforeend", el);
@@ -281,7 +282,7 @@ function togglClassClick(el) {
 // *******************Click virtual keyboard**********************
 
 let textAreaDom = document.querySelector(".textArea");
-let indexShift;
+let index;
 
 [...arrKeyboard].forEach((el, ind, arr) =>
   el.addEventListener("click", () => {
@@ -296,16 +297,27 @@ let indexShift;
     if (key === "Caps") {
       checkCaps(el);
 
-    } else if (key === "Shift") {
-      indexShift = ind;
+    }else if (key === "Shift" && !isAltClick && !isShiftClick) {
+      index = ind;
       checkShift(el);
+
+    } else if (key === "Alt" && !isShiftClick) {
+      checkAlt(el);
+      index = ind;
+
+    }else if (key === "Shift" && !!isAltClick) {
+      togglClassClick(el);
+      checkAlt(arr[index]);
+      setTimeout(() => {
+        togglClassClick(el);
+      }, 100);
 
     } else {
       isKeyDown = " ";
       togglClassClick(el);
 
-      if (isShiftClick) {
-        checkShift(arr[indexShift]);
+      if (isShiftClick ) {
+        checkShift(arr[index]);
       }
 
       setTimeout(() => {
@@ -318,6 +330,20 @@ let indexShift;
   })
 );
 
+
+function checkAlt(el) {
+  if (!isAltClick) {
+    isAltClick = true;
+    isKeyDown = " ";
+    togglClassClick(el);
+  } else if (isAltClick) {
+    isKeyDown = "";
+    isAltClick = false;  
+    // isShiftClick = false;
+    togglClassClick(el);
+    changeLang(oppositeKeyboard);
+  }
+}
 
 function checkShift(el) {
   if (!isShiftClick) {
@@ -332,7 +358,6 @@ function checkShift(el) {
     keyValueUpperCase();
   }
 }
-
 
 function checkCaps(el) {
   if (!isCapsOn) {
